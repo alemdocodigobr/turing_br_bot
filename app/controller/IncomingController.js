@@ -1,0 +1,221 @@
+/**
+ * Turing Bot
+ *
+ * This file is part of Turing Bot.
+ * You are free to modify and share this project or its files.
+ *
+ * @package  turing_br_bot
+ * @license  GPLv3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
+ */
+
+import DefaultController from "./DefaultController.js";
+import GreetingsCommand from "./command/GreetingsCommand.js";
+// import StartCommand from "./command/Start.js";
+// import KickCommand from "./command/Kick.js";
+// import BanCommand from "./command/Ban.js";
+// import RestrictCommand from "./command/Restrict.js";
+// import UnbanCommand from "./command/Unban.js";
+// import CheckRestriction from "./action/CheckRestriction.js";
+import NewChatMemberAction from "./action/NewChatMemberAction.js";
+// import LeftChatMember from "./action/LeftChatMember.js";
+
+export default class IncomingController extends DefaultController {
+
+    /**
+     * The constructor.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    constructor(app) {
+
+        super(app, "/incoming");
+
+        this.actions = {};
+        this.commands = {};
+
+        this.initializeActions();
+        this.initializeCommands();
+    }
+
+    /**
+     * Controller's main route.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    index(request, response) {
+
+        if (request.params.auth !== process.env.AUTH) {
+            response.status(401).send("Forbidden");
+        }
+
+        const payload = request.body;
+
+        if (!payload.message) {
+            response.status(200).send();
+        }
+
+        this.handle(payload);
+        response.status(200).send();
+    }
+
+    /**
+     * Handles the incoming message.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param {Record<string, any>} payload
+     */
+    handle(payload) {
+
+        let message;
+
+        if (typeof payload.message !== "undefined") {
+            message = payload.message;
+
+        } else if (typeof payload.edited_message !== "undefined") {
+            message = payload.edited_message;
+        }
+
+        if (message) {
+            this.saveUserAndChat(message.from, message.chat);
+        }
+
+        switch (true) {
+
+            case this.isCommand(payload):
+                this.handleCommand(payload);
+                break;
+
+            default:
+                this.handleAction(payload);
+        }
+    }
+
+    /**
+     * Forbidden action.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param request
+     * @param response
+     */
+    forbidden(request, response) {
+        response.status(401).send("Forbidden");
+    }
+
+    /**
+     * Initializes the controller's routes.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    initializeRoutes() {
+        this.router.post(this.path + "/:auth", this.index.bind(this));
+        this.router.all(this.path, this.forbidden.bind(this));
+    }
+
+    /**
+     * Returns whether the incoming message is a command or not.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    isCommand(payload) {
+        return (
+            typeof payload.message !== "undefined" &&
+            typeof payload.message.entities !== "undefined" &&
+            payload.message.entities[0].type === "bot_command"
+        );
+    }
+
+    /**
+     * Handles the incoming command.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    async handleCommand(payload) {
+
+        this.deleteMessage(
+            payload.message.message_id,
+            payload.message.chat.id
+        );
+
+        const instruction = payload.message.text.replace("/", "").split(" ");
+        const command = instruction[0].split("@")[0];
+        const callable = typeof instruction[1] !== "undefined" ? instruction[1] : "index";
+
+        if (typeof this.commands[command] !== "undefined") {
+
+            const className = this.commands[command];
+            const commandObject = new className(this.app);
+            const method = typeof commandObject[callable] !== "undefined" ? callable : "index";
+
+            const argumentsIndex = typeof commandObject[callable] !== "undefined" ? 2 : 1;
+            const args = instruction.length > argumentsIndex ? instruction.slice(argumentsIndex) : [];
+
+            try {
+                commandObject[method](payload, ...args);
+
+            } catch (err) {
+                this.app.log(err.toString());
+            }
+        }
+    }
+
+    /**
+     * Handles the incoming action.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    async handleAction(payload) {
+
+        if (typeof payload.message === "undefined") {
+            return;
+        }
+
+        for (let action in this.actions) {
+            if (payload.message.hasOwnProperty(action)) {
+                const className = this.actions[action];
+                (new className(this.app)).run(payload);
+            }
+        }
+    }
+
+    /**
+     * Initializes the BOT's actions.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    initializeActions() {
+        this.actions = {
+            // photo            : CheckRestriction,
+            // entities         : CheckRestriction,
+            new_chat_member  : NewChatMemberAction,
+            // left_chat_member : LeftChatMember
+        };
+    }
+
+    /**
+     * Initializes the BOT's commands.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     */
+    initializeCommands() {
+        this.commands = {
+            greetings : GreetingsCommand,
+            // start     : StartCommand,
+            // kick      : KickCommand,
+            // ban       : BanCommand,
+            // unban     : UnbanCommand,
+            // restrict  : RestrictCommand
+        };
+    }
+}
