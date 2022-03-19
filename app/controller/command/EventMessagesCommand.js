@@ -94,7 +94,6 @@ export default class EventMessagesCommand extends CommandController {
 
         const messageIndex = "eventMessages" + (status === true ? "Activated" : "Deactivated");
         const sendMessage = new SendMessage();
-        console.log(Lang.get(messageIndex));
         sendMessage
             .setChatId(payload.message.chat.id)
             .setText(Lang.get(messageIndex))
