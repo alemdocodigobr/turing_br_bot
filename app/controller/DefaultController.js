@@ -140,7 +140,7 @@ export default class DefaultController {
             languageCode: userObject.language_code
         });
 
-        this.warnNamechanging(user, userObject, chatObject);
+        this.warnNamechanging(user, userObject, chat);
     }
 
     /**
@@ -156,7 +156,8 @@ export default class DefaultController {
         const data = {
             id: chatObject.id,
             title: chatObject.title,
-            type: chatObject.type
+            type: chatObject.type,
+            config: {}
         };
 
         const chats = new ChatsModel();
@@ -202,9 +203,9 @@ export default class DefaultController {
      */
     async warnNamechanging(oldUser, newUser, chat) {
 
-        // if (!chat.warn_name_changing) {
-        //     return;
-        // }
+        if (!chat.config.nameChangingWarning) {
+            return;
+        }
 
         if (oldUser.firstName === newUser.first_name && oldUser.lastName === newUser.last_name) {
             return;

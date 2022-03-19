@@ -13,7 +13,7 @@ import ChatsModel from "../../model/ChatsModel.js";
 import SendMessage from "../../library/telegram/resource/SendMessage.js";
 import Lang from "../../helper/Lang.js";
 
-export default class EventMessagesCommand extends CommandController {
+export default class NameChangingWarning extends CommandController {
 
     /**
      * The constructor.
@@ -38,7 +38,7 @@ export default class EventMessagesCommand extends CommandController {
     }
 
     /**
-     * Enables the event messages.
+     * Enables the name changing warning.
      *
      * @author Marcos Leandro
      * @since  1.0.0
@@ -46,11 +46,11 @@ export default class EventMessagesCommand extends CommandController {
      * @param {object} payload
      */
     async on(payload) {
-        this.changeEventMessagesStatus(payload, true);
+        this.changeWarning(payload, true);
     }
 
     /**
-     * Disables the event messages.
+     * Disables the name changing warning.
      *
      * @author Marcos Leandro
      * @since  1.0.0
@@ -58,16 +58,16 @@ export default class EventMessagesCommand extends CommandController {
      * @param {object} payload
      */
     async off(payload) {
-        this.changeEventMessagesStatus(payload, false);
+        this.changeWarning(payload, false);
     }
 
     /**
-     * Changes the event messages status.
+     * Changes the name changing warning status.
      *
      * @author Marcos Leandro
      * @since  1.0.0
      */
-    async changeEventMessagesStatus(payload, status) {
+    async changeWarning(payload, status) {
 
         if (!this.isAdmin(payload)) {
             this.warnUserAboutReporting(payload);
@@ -85,14 +85,14 @@ export default class EventMessagesCommand extends CommandController {
             chat.config = {};
         }
 
-        chat.config.eventMessages = status;
+        chat.config.nameChangingWarning = status;
 
         chats.update(
             { id: payload.message.chat.id },
             { config: chat.config }
         );
 
-        const messageIndex = "eventMessages" + (status === true ? "Activated" : "Deactivated");
+        const messageIndex = "nameChangingWarning" + (status === true ? "Activated" : "Deactivated");
         const sendMessage = new SendMessage();
         sendMessage
             .setChatId(payload.message.chat.id)

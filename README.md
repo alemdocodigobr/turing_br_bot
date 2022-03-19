@@ -16,13 +16,13 @@ Mais informações sobre o MongoDB podem ser encontradas na [Documentação Ofic
 A primeira coisa que precisa ser feita para rodar o projeto é instalar suas dependências.
 Este passo pode ser feito de forma muito simples. No diretório do projeto, rode o seguinte comando:
 
-    npm install
+    $ npm install
 
 ## Uso
 
 Com o projeto pronto para ser executado, basta rodar o comando que o fará rodar:
 
-    npm start
+    $ npm start
 
 Se a seguinte frase aparecer, significa que o projeto está rodando:
 
