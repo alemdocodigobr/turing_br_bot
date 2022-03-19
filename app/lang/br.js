@@ -15,6 +15,8 @@ export default {
     commandGreetingsDeactivated : "Saudações desativadas",
     eventMessagesActivated : "Mensagens de evento ativadas",
     eventMessagesDeactivated : "Mensagens de evento desativadas",
+    nameChangingWarningActivated: "Aviso de mudança de nome ativado",
+    nameChangingWarningDeactivated: "Aviso de mudança de nome desativado",
     warnNameChanging : "<a href=\"tg://user?id={userid}\">{oldname}</a> mudou seu nome para <a href=\"tg://user?id={userid}\">{newname}</a>",
     unauthorizedCommand : "<a href=\"tg://user?id={userid}\">{username}</a>, você não está autorizado a enviar este comando aqui.\nEste incidente será reportado.",
     unauthorizedCommandReport : "O usuário <a href=\"tg://user?id={userid}\">{username}</a> está tentando enviar um comando não autorizado em <a href=\"https://t.me/{chaturl}\">{chatname}</a>:\n<pre>{content}</pre>",

@@ -11,6 +11,7 @@
 import DefaultController from "./DefaultController.js";
 import GreetingsCommand from "./command/GreetingsCommand.js";
 import EventMessagesCommand from "./command/EventMessagesCommand.js";
+import NameChangingWarning from "./command/NameChangingWarning.js";
 import NewChatMemberAction from "./action/NewChatMemberAction.js";
 import LeftChatMemberAction from "./action/LeftChatMemberAction.js";
 
@@ -206,7 +207,8 @@ export default class IncomingController extends DefaultController {
     initializeCommands() {
         this.commands = {
             greetings: GreetingsCommand,
-            eventmessages: EventMessagesCommand
+            eventmessages: EventMessagesCommand,
+            namechangingwarning: NameChangingWarning
             // start     : StartCommand,
             // kick      : KickCommand,
             // ban       : BanCommand,
