@@ -37,3 +37,7 @@ Assim fica fácil alterarmos os parâmetros de acordo com nossas necessidades, s
 
 Este projeto contém um exemplo de arquivo .env para que sua criação seja simples para qualquer pessoa que deseje contribuir com o projeto.
 Ele está localizado na raíz do projeto e chama-se .env.example
+
+### node-fetch
+O node-fetch permite que o bot faça requisições HTTP.
+Ele é usado na library do Telegram e as requisições são feitas à API de bots do Telegram.
