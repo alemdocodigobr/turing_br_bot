@@ -4,12 +4,22 @@ O Turing Bot é um projeto colaborativo do grupo [Programação Web para Inician
 
 Este projeto consiste em um bot para o Telegram criado pelos participantes para gerenciar o próprio grupo.
 
+## Instalação
+Para instalar o Turing Bot, é necessário ter o node versão 11 ou superior.
+Outra dependência do Turing Bot é o MongoDB. Ele é um sistema de banco de dados não relacional, de fácil instalação e utilização.
+Utiliza JSON como sintaxe, tornando muito simples a manipulação de dados.
 
-## Uso
+A escolha do MongoDB se deu pela baixa curva de aprendizagem, e pelo fato de não ser necessário estruturar o banco de dados antes da utilização do bot.
+
+Mais informações sobre o MongoDB podem ser encontradas na [Documentação Oficial do MongoDB](https://docs.mongodb.com/manual/) (em inglês).
+
 A primeira coisa que precisa ser feita para rodar o projeto é instalar suas dependências.
 Este passo pode ser feito de forma muito simples. No diretório do projeto, rode o seguinte comando:
 
     npm install
+
+## Uso
+
 Com o projeto pronto para ser executado, basta rodar o comando que o fará rodar:
 
     npm start
