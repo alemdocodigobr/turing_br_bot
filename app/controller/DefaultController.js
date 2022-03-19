@@ -91,6 +91,10 @@ export default class DefaultController {
      */
     async saveUserAndChat(userObject, chatObject) {
 
+        if (!userObject || !chatObject) {
+            return;
+        }
+
         const chats = new ChatsModel();
         let chat  = await chats.findOne({ id: chatObject.id });
 
