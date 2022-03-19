@@ -10,14 +10,9 @@
 
 import DefaultController from "./DefaultController.js";
 import GreetingsCommand from "./command/GreetingsCommand.js";
-// import StartCommand from "./command/Start.js";
-// import KickCommand from "./command/Kick.js";
-// import BanCommand from "./command/Ban.js";
-// import RestrictCommand from "./command/Restrict.js";
-// import UnbanCommand from "./command/Unban.js";
-// import CheckRestriction from "./action/CheckRestriction.js";
+import EventMessagesCommand from "./command/EventMessagesCommand.js";
 import NewChatMemberAction from "./action/NewChatMemberAction.js";
-// import LeftChatMember from "./action/LeftChatMember.js";
+import LeftChatMemberAction from "./action/LeftChatMemberAction.js";
 
 export default class IncomingController extends DefaultController {
 
@@ -197,8 +192,8 @@ export default class IncomingController extends DefaultController {
         this.actions = {
             // photo            : CheckRestriction,
             // entities         : CheckRestriction,
-            new_chat_member  : NewChatMemberAction,
-            // left_chat_member : LeftChatMember
+            new_chat_member: NewChatMemberAction,
+            left_chat_member: LeftChatMemberAction
         };
     }
 
@@ -210,7 +205,8 @@ export default class IncomingController extends DefaultController {
      */
     initializeCommands() {
         this.commands = {
-            greetings : GreetingsCommand,
+            greetings: GreetingsCommand,
+            eventmessages: EventMessagesCommand
             // start     : StartCommand,
             // kick      : KickCommand,
             // ban       : BanCommand,

@@ -45,7 +45,7 @@ export default class NewChatMember extends ActionController {
             return;
         }
 
-        if (chat.config?.removeEventMessages) {
+        if (typeof chat.config?.eventMessages !== "undefined" && !chat.config.eventMessages) {
             this.deleteMessage(payload.message.message_id, payload.message.chat.id);
         }
 
