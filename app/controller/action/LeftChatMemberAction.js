@@ -10,6 +10,7 @@
 
 import ActionController from "../ActionController.js";
 import ChatsModel from "../../model/ChatsModel.js";
+import UsersModel from "../../model/UsersModel.js";
 
 export default class NewChatMember extends ActionController {
 
@@ -33,8 +34,6 @@ export default class NewChatMember extends ActionController {
      */
     async run(payload) {
 
-        await this.saveUserAndChat(payload.message.new_chat_member, payload.message.chat);
-
         const chats = new ChatsModel();
         const chat = await chats.findOne({ id: payload.message.chat.id });
 
@@ -45,5 +44,77 @@ export default class NewChatMember extends ActionController {
         if (typeof chat.config?.eventMessages !== "undefined" && !chat.config.eventMessages) {
             this.deleteMessage(payload.message.message_id, payload.message.chat.id);
         }
+
+        this.removeUserFromChat(
+            payload.message.left_chat_member.id,
+            payload.message.chat.id
+        );
+
+        this.removeChatFromUser(
+            payload.message.left_chat_member.id,
+            payload.message.chat.id
+        );
+    }
+
+    /**
+     * Removes the user from the chat.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param {number} userId
+     * @param {number} chatId
+     */
+    async removeUserFromChat(userId, chatId) {
+
+        const chats = new ChatsModel();
+        const chat = await chats.findOne({ id: chatId });
+
+        if (!chat) {
+            return;
+        }
+
+        if (!Array.isArray(chat.users)) {
+            return;
+        }
+
+        const index = chat.users.indexOf(userId);
+        if (index === -1) {
+            return;
+        }
+
+        chat.users.splice(index, 1);
+        chats.update({ id : chatId }, { users: chat.users });
+    }
+
+    /**
+     * Removes the chat from user.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param {number} userId
+     * @param {number} chatId
+     */
+    async removeChatFromUser(userId, chatId) {
+
+        const users = new UsersModel();
+        const user = await users.findOne({ id: userId });
+
+        if (!user) {
+            return;
+        }
+
+        if (!Array.isArray(user.chats)) {
+            return;
+        }
+
+        const index = user.chats.indexOf(chatId);
+        if (index === -1) {
+            return;
+        }
+
+        user.chats.splice(index, 1);
+        users.update({ id : userId }, { chats: user.chats });
     }
 }
