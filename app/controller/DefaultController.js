@@ -297,6 +297,63 @@ export default class DefaultController {
     }
 
     /**
+     * Returns the user's Telegram ID.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param {string} username
+     *
+     * @returns {Promise<number|null>}
+     */
+     async getUserId(payload) {
+
+        if (typeof payload.message?.reply_to_message?.from?.id !== "undefined") {
+            return payload.message.reply_to_message.from.id;
+        }
+
+        const message = payload.message.text || "";
+        const content = message.split(" ");
+
+        if (content.length < 2) {
+            return null;
+        }
+
+        if (Number(content[1]) == content[1]) {
+            return Number(content[1]);
+        }
+
+        if (payload.message?.entities?.length) {
+            for (let i = 0, length = payload.message?.entities?.length; i < length; i++) {
+
+                if (payload.message.entities[i].type === "mention") {
+                    return await this.getUserByMention(
+                        content[1].replace(/^@/, "")
+                    );
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the user's Telegram ID by its username.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param {string} username
+     *
+     * @return {Promise<number|null>}
+     */
+     async getUserByMention(username) {
+        const users = new UsersModel();
+        const user = await users.findOne({ username : username });
+        return user?.id || null;
+    }
+
+    /**
      * Initializes the controller's routes.
      *
      * @author Marcos Leandro
