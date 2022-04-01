@@ -45,7 +45,8 @@ export default class GreetingsCommand extends CommandController {
      */
     async on(payload) {
 
-        if (!this.isAdmin(payload)) {
+        const isAdmin = await this.isAdmin(payload);
+        if (!isAdmin) {
             this.warnUserAboutReporting(payload);
             return;
         }
@@ -90,7 +91,8 @@ export default class GreetingsCommand extends CommandController {
      */
     async off(payload) {
 
-        if (!this.isAdmin(payload)) {
+        const isAdmin = await this.isAdmin(payload);
+        if (!isAdmin) {
             this.warnUserAboutReporting(payload);
             return;
         }
@@ -135,7 +137,8 @@ export default class GreetingsCommand extends CommandController {
      */
     async set(payload) {
 
-        if (!this.isAdmin(payload)) {
+        const isAdmin = await this.isAdmin(payload);
+        if (!isAdmin) {
             this.warnUserAboutReporting(payload);
             return;
         }

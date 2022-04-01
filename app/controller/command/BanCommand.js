@@ -35,7 +35,8 @@ export default class BanCommand extends CommandController {
      */
      async index(payload) {
 
-        if (!this.isAdmin(payload)) {
+        const isAdmin = await this.isAdmin(payload);
+        if (!isAdmin) {
             this.warnUserAboutReporting(payload);
             return;
         }
