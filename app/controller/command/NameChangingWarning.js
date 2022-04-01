@@ -69,7 +69,8 @@ export default class NameChangingWarning extends CommandController {
      */
     async changeWarning(payload, status) {
 
-        if (!this.isAdmin(payload)) {
+        const isAdmin = await this.isAdmin(payload);
+        if (!isAdmin) {
             this.warnUserAboutReporting(payload);
             return;
         }

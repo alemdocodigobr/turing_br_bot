@@ -69,7 +69,8 @@ export default class EventMessagesCommand extends CommandController {
      */
     async changeEventMessagesStatus(payload, status) {
 
-        if (!this.isAdmin(payload)) {
+        const isAdmin = await this.isAdmin(payload);
+        if (!isAdmin) {
             this.warnUserAboutReporting(payload);
             return;
         }
