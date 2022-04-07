@@ -77,6 +77,7 @@ export default class NewChatMember extends ActionController {
             .setChatId(payload.message.chat.id)
             .setText(text)
             .setParseMode("HTML")
+            .setProtectContent(true)
             .setDisableNotification(true);
 
         /* Remove the message after 10 minutes. */
