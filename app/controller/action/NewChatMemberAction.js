@@ -77,7 +77,23 @@ export default class NewChatMember extends ActionController {
             .setChatId(payload.message.chat.id)
             .setText(text)
             .setParseMode("HTML")
-            .post();
+            .setProtectContent(true)
+            .setDisableNotification(true);
+
+        /* Remove the message after 10 minutes. */
+        sendMessage.post().then(response => {
+            setTimeout(async () => {
+
+                const content = await response.json();
+                if (content) {
+                    this.deleteMessage(
+                        content.result.message_id,
+                        content.result.chat.id
+                    );
+                }
+
+            }, 10 * 60 * 1000 /* 10 Minutes */);
+        });
     }
 
     /**

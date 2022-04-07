@@ -113,6 +113,21 @@ export default class SendMessage extends TelegramBotApi {
     }
 
     /**
+     * Sets the content protection.
+     *
+     * @author Marcos Leandro
+     * @since  1.0.0
+     *
+     * @param  {Boolean} disableNotification
+     *
+     * @return {SendMessage}
+     */
+    setProtectContent(protectContent) {
+        this.payload.protect_content = protectContent;
+        return this;
+    }
+
+    /**
      * Sets the reply to message id.
      *
      * @author Marcos Leandro
