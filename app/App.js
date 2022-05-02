@@ -10,7 +10,6 @@
 
 import fs from "fs";
 import express from "express";
-import bodyParser from "body-parser";
 import mongodb from "mongodb";
 import GetUpdates from "./library/telegram/resource/GetUpdates.js";
 import IncomingController from "./controller/IncomingController.js";
@@ -132,7 +131,8 @@ export default class App {
      * @return {void}
      */
     initializeMiddlewares() {
-        this.app.use(bodyParser.json({ type: "*/*" }));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended : true }));
     }
 
     /**
