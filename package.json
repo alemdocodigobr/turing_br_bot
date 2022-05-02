@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/alemdocodigobr/turing_br_bot#readme",
   "dependencies": {
-    "body-parser": "^1.19.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "mongodb": "^4.4.1",
