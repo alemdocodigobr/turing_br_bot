@@ -36,11 +36,6 @@ A porta informada pode variar de acordo com sua configuração do arquivo .env (
 O express é um framework para o node.js que facilita o trabalho com requisições (requests) e respostas (responses) HTTP.
 Com ele é possível definir quais verbos HTTP serão enviados pra quais rotas dentro do aplicativo, além de definir de forma simples as respostas que a aplicação enviará.
 
-### Body Parser
-O Body Parser é um middleware, ou seja, atua entre a requisição em si e o express.
-Ele faz a leitura de tudo o que é enviado no corpo da requisição , faz o tratamento necessário e adiciona como atributos.
-No caso de um bot Telegram, ele precisa converter tudo o que é enviado para JSON, para que possamos saber exatamente o que está sendo solicitado ao Bot.
-
 ### dotenv
 O dotenv permite criar arquivos .env definindo alguns parâmetros do bot.
 Assim fica fácil alterarmos os parâmetros de acordo com nossas necessidades, seja pra testar em vários ambientes ou pra criar novos bots com base neste repositório.
