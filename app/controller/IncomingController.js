@@ -79,7 +79,8 @@ export default class IncomingController extends DefaultController {
         }
 
         if (message) {
-            this.saveUserAndChat(message.from, message.chat);
+            this.saveMessageUserAndChat(message.from, message.chat);
+            this.saveMessage(message);
         }
 
         switch (true) {
@@ -180,8 +181,7 @@ export default class IncomingController extends DefaultController {
 
         for (let action in this.actions) {
             if (payload.message.hasOwnProperty(action)) {
-                const className = this.actions[action];
-                (new className(this.app)).run(payload);
+                this.actions[action].map(classname => (new classname(this.app)).run(payload));
             }
         }
     }
@@ -194,10 +194,8 @@ export default class IncomingController extends DefaultController {
      */
     initializeActions() {
         this.actions = {
-            // photo            : CheckRestriction,
-            // entities         : CheckRestriction,
-            new_chat_member: NewChatMemberAction,
-            left_chat_member: LeftChatMemberAction
+            new_chat_member: [NewChatMemberAction],
+            left_chat_member: [LeftChatMemberAction]
         };
     }
 
@@ -213,10 +211,6 @@ export default class IncomingController extends DefaultController {
             eventmessages: EventMessagesCommand,
             greetings: GreetingsCommand,
             namechangingwarning: NameChangingWarning
-            // start     : StartCommand,
-            // kick      : KickCommand,
-            // unban     : UnbanCommand,
-            // restrict  : RestrictCommand
         };
     }
 }
