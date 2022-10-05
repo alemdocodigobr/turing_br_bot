@@ -11,7 +11,7 @@ Utiliza JSON como sintaxe, tornando muito simples a manipulação de dados.
 
 A escolha do MongoDB se deu pela baixa curva de aprendizagem, e pelo fato de não ser necessário estruturar o banco de dados antes da utilização do bot.
 
-Mais informações sobre o MongoDB podem ser encontradas na [Documentação Oficial do MongoDB](https://docs.MongoDB.com/manual/) (em inglês).
+Mais informações sobre o MongoDB podem ser encontradas na [Documentação Oficial do MongoDB](https://docs.mongodb.com/manual/) (em inglês).
 
 A primeira coisa que precisa ser feita para rodar o projeto é instalar suas dependências.
 Este passo pode ser feito de forma muito simples. No diretório do projeto, rode o seguinte comando:
