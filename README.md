@@ -1,6 +1,6 @@
 # Turing Bot
 
-O Turing Bot é um projeto colaborativo do grupo [Programação Web para Iniciantes (Além do Código)](https://t.me/alemdocodigo).
+O Turing Bot é um projeto colaborativo do grupo [Além do Código](https://t.me/alemdocodigo).
 
 Este projeto consiste em um bot para o Telegram criado pelos participantes para gerenciar o próprio grupo.
 
@@ -32,7 +32,7 @@ A porta informada pode variar de acordo com sua configuração do arquivo .env (
 
 ## Descrição das Dependências
 
-### Express
+### express
 O express é um framework para o node.js que facilita o trabalho com requisições (requests) e respostas (responses) HTTP.
 Com ele é possível definir quais verbos HTTP serão enviados pra quais rotas dentro do aplicativo, além de definir de forma simples as respostas que a aplicação enviará.
 
@@ -46,3 +46,11 @@ Ele está localizado na raíz do projeto e chama-se .env.example
 ### node-fetch
 O node-fetch permite que o bot faça requisições HTTP.
 Ele é usado na library do Telegram e as requisições são feitas à API de bots do Telegram.
+
+### mongodb
+Este é o driver oficial do MongoDB para o Node.js.
+Ele adiciona o suporte ao MongoDB para que possamos nos conectar ao banco de dados.
+
+### nodemon
+O nodemon é uma ferramenta que facilita o desenvolvimento do bot, pois o reinicia automaticamente sempre que alguma alteração de arquivo é detectada.
+Precisamos dele pois, uma vez iniciada, a aplicação fica carregada em memória. As alterações feitas nos arquivos não são interpretadas em tempo real.
