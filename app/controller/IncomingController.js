@@ -78,11 +78,6 @@ export default class IncomingController extends DefaultController {
             message = payload.edited_message;
         }
 
-        if (message) {
-            this.saveMessageUserAndChat(message.from, message.chat);
-            this.saveMessage(message);
-        }
-
         switch (true) {
 
             case this.isCommand(payload):
